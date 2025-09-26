@@ -25,7 +25,7 @@ cd ${data_loc}
 for i in $(cat sampleList.txt);
 do
   echo "Running sample ${i}..."
-  #open up software for getting rid of contamination bbsplit
+  #open up software for getting rid of contamination bbsplit, specific reads move through the code below and it trys to find reads that match with the contamination reference genomes
   ~/software/bbmap/bbsplit.sh in1=${trim_read_loc}/${i}.trim.1.fq \
   in2=${trim_read_loc}/${i}.trim.2.fq \
   ref=${genome_1},${genome_2},${genome_3} \
