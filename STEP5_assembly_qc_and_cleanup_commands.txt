@@ -1,0 +1,18 @@
+# (step5a) This command will generate statistics for the assembled contigs for sample 2
+~/software/seqkit stats -a ~/data/metagenomics/assemblies/2_assemblies/final.contigs.fa > s2_contig_qc.txt
+
+# (step5b) This command will rename each contig name to be 2_{nr}, where 2 is the sample ID, 
+# and {nr} will automatically start at 1 and increment with each sequence entry 
+# Saving this new renamed contig name fasta to a file called 2_contigs.fa
+~/software/seqkit replace -p .+ -r 2_{nr} ~/data/metagenomics/assemblies/2_assemblies/final.contigs.fa > 2_contigs.fa
+
+
+#dont want to run CAsfinder on sequences that are likely not to have Crisparray so we filtered over 10kB
+# (step5c) This command will remove contigs < 10kb long
+~/software/seqkit seq -m 10000 2_contigs.fa > 2_contigs.10kb.fa
+
+
+#this is done for a process called paralization 
+# this is done so the computer doesnt have to work 1 by one in a big ass file it can get 6 seperate files from the big one and run the Casfinder script on 6 files at once for one file 
+# (step5d) This command will split fasta files into 1000 sequences per file
+~/software/seqkit split –s 1000 2_contigs.10kb.fa
